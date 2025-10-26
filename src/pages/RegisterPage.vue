@@ -47,9 +47,11 @@
 
 <script setup>
 import axios from 'axios'
+import { useNotification } from '@/composables/useNotification'
 import { useRouter } from 'vuetify/lib/composables/router'
 
 const router = useRouter()
+const notification = useNotification()
 
 const valid = ref(false)
 const currentIconPassword = ref('mdi-eye-off')
@@ -92,9 +94,10 @@ async function createUser() {
                 ...formData.value
             }
         )
+        notification.success(`Usuário ${formData.value.name} criado com sucesso`)
         router.push({ name: 'login' })
     } catch (error) {
-        console.log('Erro ao criar usuário', error)
+        notification.error(`Erro ao criar o usuário ${formData.value.name}. Detalhes: ${error?.response?.data?.detail}`, 9000)
     }
 }
 
