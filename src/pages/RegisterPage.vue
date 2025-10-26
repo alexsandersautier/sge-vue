@@ -46,6 +46,11 @@
 </template>
 
 <script setup>
+import axios from 'axios'
+import { useRouter } from 'vuetify/lib/composables/router'
+
+const router = useRouter()
+
 const valid = ref(false)
 const currentIconPassword = ref('mdi-eye-off')
 const typePassword = ref('password')
@@ -62,15 +67,35 @@ const rules = {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return pattern.test(value) || 'E-mail inválido'
     },
-    password: value => value.length >= 6 && value.length <= 12 || 'A senha deve conter entre 6 e 12 caracteres',
+    password: value => {
+        if (!value) return true
+        if (value.length < 6 || value.length > 12) return 'A senha deve conter entre 6 e 12 caracteres'
+        if (!/[a-z]/.test(value)) return 'A senha deve conter pelo menos uma letra minúscula'
+        if (!/[A-Z]/.test(value)) return 'A senha deve conter pelo menos uma letra maiúscula'
+        if (!/[0-9]/.test(value)) return 'A senha deve conter pelo menos um número'
+        return true
+    },
 }
 
 function handleSubmit() {
     if (!valid.value) {
         alert('Formulário incompleto')
     }
-    alert(JSON.stringify(formData.value))
-    alert('Formulário enviado com sucesso')
+    createUser()
+}
+
+async function createUser() {
+    try {
+        await axios.post(
+            `${import.meta.env.VITE_API_URL}/user`,
+            {
+                ...formData.value
+            }
+        )
+        router.push({ name: 'login' })
+    } catch (error) {
+        console.log('Erro ao criar usuário', error)
+    }
 }
 
 function showPassword() {
