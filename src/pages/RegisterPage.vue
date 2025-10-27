@@ -89,8 +89,7 @@ function handleSubmit() {
 
 async function createUser() {
     try {
-        await api.post(
-            `${import.meta.env.VITE_API_URL}/user`,
+        await api.post('/user',
             {
                 ...formData.value
             }
