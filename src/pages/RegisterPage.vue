@@ -46,12 +46,13 @@
 </template>
 
 <script setup>
-import axios from 'axios'
 import { useNotification } from '@/composables/useNotification'
 import { useRouter } from 'vuetify/lib/composables/router'
+import { useApi } from '@/composables/useApi'
 
 const router = useRouter()
 const notification = useNotification()
+const api = useApi()
 
 const valid = ref(false)
 const currentIconPassword = ref('mdi-eye-off')
@@ -88,7 +89,7 @@ function handleSubmit() {
 
 async function createUser() {
     try {
-        await axios.post(
+        await api.post(
             `${import.meta.env.VITE_API_URL}/user`,
             {
                 ...formData.value
