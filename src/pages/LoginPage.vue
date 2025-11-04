@@ -82,7 +82,7 @@ function handleSubmit() {
 
 async function login() {
     try {
-        const response = await api.post('user/login', { ...formData.value })
+        const response = await api.post('/login', { ...formData.value })
         localStorage.setItem('v-token', response.data.token)
         notification.success('Login efetuado com sucesso')
         router.push({ name: 'home' })
