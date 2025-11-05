@@ -15,7 +15,7 @@
                     Cancelar
                 </v-btn>
 
-                <v-btn :disabled="!valid" color="primary" type="submit">
+                <v-btn :disabled="!valid" color="secondary" type="submit">
                     Salvar
                 </v-btn>
             </div>

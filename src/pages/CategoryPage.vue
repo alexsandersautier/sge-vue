@@ -6,14 +6,14 @@
         </div>
         <v-data-table :headers="headers" :items="categories">
             <template v-slot:item.actions="{ item }">
-                <v-btn class="mr-3" size="small" color="primary" icon="mdi-pencil-box-multiple"
+                <v-btn class="mr-3" size="small" color="secondary" icon="mdi-pencil-box-multiple"
                     @click="handleEdit(item.id)"> </v-btn>
                 <v-btn size="small" color="error" icon="mdi-trash-can" @click="handleDelete(item)"> </v-btn>
                 <v-dialog v-model="dialog" width="auto">
                     <v-card max-width="400" prepend-icon="mdi-trash-can"
                         :text="`Deseja realmente deletar a categoria ${itemToDelete}`" title="Deletar">
                         <template v-slot:actions>
-                            <v-btn color="primary" text="Não" @click="dialog = false"></v-btn>
+                            <v-btn color="secondary" text="Não" @click="dialog = false"></v-btn>
                             <v-btn color="error" text="Sim" @click="dialog = false"></v-btn>
                         </template>
                     </v-card>
