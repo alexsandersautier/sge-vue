@@ -28,11 +28,11 @@
 </template>
 
 <script setup>
-import { useApi } from '@/composables/useApi'
+import { useProductService } from '@/services'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const api = useApi()
+const service = useProductService()
 
 const dialog = ref(false)
 const itemToDelete = ref('')
@@ -54,8 +54,7 @@ const footerOptions = [
 
 async function getProducts() {
     try {
-        const response = await api.get('/product')
-        products.value = response.data
+        products.value = await service.getAll()
     } catch (error) {
         notification.error(`Erro ao adquirir os produtos. Detalhes: ${error}`, 9000)
     }

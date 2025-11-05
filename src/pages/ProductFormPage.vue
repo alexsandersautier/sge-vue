@@ -36,12 +36,13 @@
 
 
 <script setup>
-import { useApi } from '@/composables/useApi'
 import { useNotification } from '@/composables/useNotification'
+import { useCategoryService, useProductService } from '@/services'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vuetify/lib/composables/router'
 
-const api = useApi()
+const service = useProductService()
+const serviceCategory = useCategoryService()
 const notification = useNotification()
 const router = useRouter()
 const route = useRoute()
@@ -76,11 +77,7 @@ async function handleSubmit() {
 
 async function createProduct() {
     try {
-        await api.post('/product',
-            {
-                ...formData.value
-            }
-        )
+        await service.create(formData.value)
         notification.success(`Produto ${formData.value.name} criado com sucesso`)
         router.push({ name: 'product' })
     } catch (error) {
@@ -90,11 +87,7 @@ async function createProduct() {
 
 async function updateProduct(id) {
     try {
-        await api.put(`/product/${id}`,
-            {
-                ...formData.value
-            }
-        )
+        await service.update(id, formData.value)
         notification.success(`Produto ${formData.value.name} atualizada com sucesso`)
         router.push({ name: 'product' })
     } catch (error) {
@@ -116,14 +109,12 @@ onMounted(async () => {
 })
 
 async function getCategories() {
-    const response = await api.get(`/category`)
-    categories.value = response.data
+    categories.value = await serviceCategory.getAll()
 }
 
 async function getProduct() {
     if (route.params.id) {
-        const response = await api.get(`/product/${route.params.id}`)
-        formData.value = response.data
+        formData.value = await service.getById(route.params.id)
     }
 }
 </script>
