@@ -1,0 +1,1 @@
+export { useCategoryService } from './api/category.service'

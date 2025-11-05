@@ -26,7 +26,7 @@
 
 <script setup>
 import { useNotification } from '@/composables/useNotification'
-import { useCategoryService } from '@/services/api'
+import { useCategoryService } from '@/services'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vuetify/lib/composables/router'
 

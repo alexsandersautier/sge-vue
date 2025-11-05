@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { useCategoryService } from '@/services/api'
+import { useCategoryService } from '@/services'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
