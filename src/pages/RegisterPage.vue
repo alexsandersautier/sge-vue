@@ -82,7 +82,7 @@ const rules = {
 
 function handleSubmit() {
     if (!valid.value) {
-        alert('Formulário incompleto')
+        notification.error('Formulário incompleto')
     }
     createUser()
 }
