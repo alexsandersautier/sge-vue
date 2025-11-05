@@ -10,7 +10,7 @@
             <v-textarea v-model="formData.description" label="Descrição" variant="outlined" type="text"
                 :rules="[rules.required]"></v-textarea>
 
-            <div class="d-flex ga-4">
+            <div class="d-md-flex ga-4">
                 <v-text-field v-model="formData.price" label="Preço" variant="outlined" type="number"
                     :rules="[rules.required]"></v-text-field>
 
