@@ -17,8 +17,8 @@
                 <v-select v-model="formData.status" label="Status" :items="options" variant="outlined" item-title="key"
                     item-value="value" :rules="[rules.required]"></v-select>
 
-                <v-select v-model="formData.category_id" label="Categoria" :items="categories" variant="outlined"
-                    item-title="name" item-value="id" :rules="[rules.required]"></v-select>
+                <SelectFromApi v-model="formData.category_id" :rules="[rules.required]" :resource="'category'"
+                    :label="'Categorias'" />
             </div>
 
             <div class="d-flex justify-end ga-6">
