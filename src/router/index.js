@@ -37,7 +37,7 @@ const router = createRouter({
           name: 'category',
           component: () => import('../pages/CategoryPage.vue'),
         }, {
-          path: '/category/new/:id?',
+          path: '/category/:id?',
           name: 'new-category',
           component: () => import('../pages/CategoryFormPage.vue'),
         }, {
@@ -45,7 +45,7 @@ const router = createRouter({
           name: 'product',
           component: () => import('../pages/ProductPage.vue'),
         }, {
-          path: '/product/new/:id?',
+          path: '/product/:id?',
           name: 'new-product',
           component: () => import('../pages/ProductFormPage.vue'),
         }
