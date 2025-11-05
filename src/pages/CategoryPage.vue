@@ -4,7 +4,8 @@
             <h1>Categorias</h1>
             <v-btn color="secondary" append-icon="$plus" :to="{ name: 'new-category' }">Nova</v-btn>
         </div>
-        <v-data-table :headers="headers" :items="categories">
+        <v-data-table :headers="headers" :items="categories" items-per-page-text="Por página"
+            :items-per-page-options="footerOptions">
             <template v-slot:item.status="{ item }">
                 <ChipCustom :value="item.status" />
             </template>
@@ -40,6 +41,13 @@ const headers = [
     { title: 'Nome', value: 'name', sortable: true },
     { title: 'Status', value: 'status', sortable: false },
     { title: 'Ações', value: 'actions', sortable: false, width: '125px', align: 'center' },
+]
+const footerOptions = [
+    { value: 10, title: '10' },
+    { value: 25, title: '25' },
+    { value: 50, title: '50' },
+    { value: 100, title: '100' },
+    { value: -1, title: 'Todos' }
 ]
 
 async function getCategories() {
