@@ -5,6 +5,9 @@
             <v-btn color="secondary" append-icon="$plus" :to="{ name: 'new-category' }">Nova</v-btn>
         </div>
         <v-data-table :headers="headers" :items="categories">
+            <template v-slot:item.status="{ item }">
+                <ChipCustom :value="item.status" />
+            </template>
             <template v-slot:item.actions="{ item }">
                 <v-btn class="mr-3" size="small" color="secondary" icon="mdi-pencil-box-multiple"
                     @click="handleEdit(item.id)"> </v-btn>
