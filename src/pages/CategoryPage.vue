@@ -28,11 +28,11 @@
 </template>
 
 <script setup>
-import { useApi } from '@/composables/useApi'
+import { useCategoryService } from '@/services/api'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const api = useApi()
+const service = useCategoryService()
 
 const dialog = ref(false)
 const itemToDelete = ref('')
@@ -52,8 +52,7 @@ const footerOptions = [
 
 async function getCategories() {
     try {
-        const response = await api.get('/category')
-        categories.value = response.data
+        categories.value = await service.getAll()
     } catch (error) {
         notification.error(`Erro ao adquirir as categorias. Detalhes: ${error}`, 9000)
     }

@@ -25,12 +25,12 @@
 
 
 <script setup>
-import { useApi } from '@/composables/useApi'
 import { useNotification } from '@/composables/useNotification'
+import { useCategoryService } from '@/services/api'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vuetify/lib/composables/router'
 
-const api = useApi()
+const service = useCategoryService()
 const notification = useNotification()
 const router = useRouter()
 const route = useRoute()
@@ -60,11 +60,7 @@ function handleSubmit() {
 
 async function createCategory() {
     try {
-        await api.post('/category',
-            {
-                ...formData.value
-            }
-        )
+        await service.create(formData.value)
         notification.success(`Categoria ${formData.value.name} criado com sucesso`)
         router.push({ name: 'category' })
     } catch (error) {
@@ -74,11 +70,7 @@ async function createCategory() {
 
 async function updateCategory(id) {
     try {
-        await api.put(`/category/${id}`,
-            {
-                ...formData.value
-            }
-        )
+        await service.update(id, formData.value)
         notification.success(`Categoria ${formData.value.name} atualizada com sucesso`)
         router.push({ name: 'category' })
     } catch (error) {
@@ -100,8 +92,7 @@ onMounted(async () => {
 
 async function getCategory() {
     if (route.params.id) {
-        const response = await api.get(`/category/${route.params.id}`)
-        formData.value = response.data
+        formData.value = await service.getById(route.params.id)
     }
 }
 </script>
