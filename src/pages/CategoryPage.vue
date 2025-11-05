@@ -4,8 +4,8 @@
             <h1>Categorias</h1>
             <v-btn color="secondary" append-icon="$plus" :to="{ name: 'new-category' }">Nova</v-btn>
         </div>
-        <v-data-table :headers="headers" :items="categories" items-per-page-text="Por página"
-            :items-per-page-options="footerOptions">
+        <v-data-table :loading="loading" :loading-text="'Buscando categorias'" :headers="headers" :items="categories"
+            items-per-page-text="Por página" :items-per-page-options="footerOptions">
             <template v-slot:item.status="{ item }">
                 <ChipCustom :value="item.status" />
             </template>
@@ -35,6 +35,7 @@ const router = useRouter()
 const service = useCategoryService()
 
 const dialog = ref(false)
+const loading = ref(false)
 const itemToDelete = ref('')
 const categories = ref([])
 const headers = [
@@ -52,9 +53,12 @@ const footerOptions = [
 
 async function getCategories() {
     try {
+        loading.value = true
         categories.value = await service.getAll()
     } catch (error) {
         notification.error(`Erro ao adquirir as categorias. Detalhes: ${error}`, 9000)
+    } finally {
+        loading.value = false
     }
 }
 

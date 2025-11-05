@@ -4,8 +4,8 @@
             <h1>Produtos</h1>
             <v-btn color="secondary" append-icon="$plus" :to="{ name: 'new-product' }">Novo</v-btn>
         </div>
-        <v-data-table :headers="headers" :items="products" items-per-page-text="Por página"
-            :items-per-page-options="footerOptions">
+        <v-data-table :loading="loading" :loading-text="'Buscando produtos'" :headers="headers" :items="products"
+            items-per-page-text="Por página" :items-per-page-options="footerOptions">
             <template v-slot:item.status="{ item }">
                 <ChipCustom :value="item.status" />
             </template>
@@ -35,6 +35,7 @@ const router = useRouter()
 const service = useProductService()
 
 const dialog = ref(false)
+const loading = ref(false)
 const itemToDelete = ref('')
 const products = ref([])
 const headers = [
@@ -54,9 +55,12 @@ const footerOptions = [
 
 async function getProducts() {
     try {
+        loading.value = true
         products.value = await service.getAll()
     } catch (error) {
         notification.error(`Erro ao adquirir os produtos. Detalhes: ${error}`, 9000)
+    } finally {
+        loading.value = false
     }
 }
 
